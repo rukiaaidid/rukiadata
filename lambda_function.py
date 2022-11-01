@@ -3,18 +3,18 @@ import json, csv, boto3, urllib
 from datetime import datetime
 
 s3 = boto3.resource('s3')
-s3bucket = "nrtcovid19data"
+s3bucket = "finaltest-ra"
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('importcovid19data')
+table = dynamodb.Table('test-table')
 
 def lambda_handler(event, context):
    # Save file to S3 as a backup
    dt = datetime.now().strftime("%Y%m%d%H%M%S")
    uploaddate = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + " UTC"
-   filename = dt + "_covid19data.json"
+   filename = dt + "_surveydata.json"
    lambda_path = "/tmp/" + filename
    s3_path = "data/" + filename
-   url = "https://disease.sh/v3/covid-19/jhucsse"
+   url = "https://finaltest-ra.s3.amazonaws.com/form.html"
    response = urllib.request.Request(url=url, headers={'User-Agent': 'Mozilla/5.0'})
    urldata = urllib.request.urlopen(response).read()
    data = json.loads(urldata.decode())
@@ -26,4 +26,3 @@ def lambda_handler(event, context):
    item = "{'uploaddate': {" + dt + "},'link': { " + s3_path + "}"
    item2 = "{'uploaddate': '34','link':  'microsoft'}"
    table.put_item(Item={'uploaddate': uploaddate ,'objectpath': objectpath })
-   
