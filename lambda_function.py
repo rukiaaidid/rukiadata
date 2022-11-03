@@ -7,6 +7,6 @@ def lambda_handler(event, context):
   email = event['email']
   message = event['message']
   dynamodb.put_item(TableName='test-table', Item=
-{'name':{'S':name},'email':{'S':email}, 'message':{'S':message}})
+{'firstName':{'S':firstName},'email':{'S':email}, 'message':{'S':message}})
   print(email)
    
