@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+  initial-scale=1.0" />
+  <title> Contact Form </title>
+  <link rel="stylesheet" href="https://github.com/rukiaaidid/rukiamockwebpage/form.css" />
+
+  <script>
+    // define the callAPI function that takes a first name and last name as parameters
+    var callAPI = (email,firstName,message)=>{
+        // instantiate a headers object
+        var myHeaders = new Headers();
+        // add content type header to object
+        myHeaders.append("Content-Type", "application/json");
+        // using built in JSON utility package turn object to string and store in a variable
+        var raw = JSON.stringify({"firstName":firstName,"email":email, "message":message});
+        // create a JSON object with parameters for API call and store in a variable
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        // make API call with parameters and use promises to get response
+        fetch(" https://phtg0m8jb9.execute-api.us-east-1.amazonaws.com/thirdattempt/resource1", requestOptions)
+        .then(response => response.text())
+        .then(result => alert(JSON.parse(result).message))
+        .catch(error => console.log('error', error));
+    }
+</script>
+</head>
+
+<body>
+  
+  <nav>
+    <div class="logo">EDM</div>
+    <div class="nav-items">
+    </div>
+  </nav>
+    <div class="container">
+        <h1>Please answer the following</h1>
+        <form>
+    <h3>Contact us</h3>
+            <label for="firstName" class="fcf-label">Your name</label>
+            <div class="fcf-input-group">
+                <input type="text" id="firstName" name="firstName" class="fcf-form-control" required>
+            </div>
+        <div class="fcf-form-group">
+            <label for="email" class="fcf-label">Your email address</label>
+            <div class="fcf-input-group">
+                <input type="email" id="email" name="email" class="fcf-form-control" required>
+            </div>
+        <div class="fcf-form-group">
+            <label for="message" class="fcf-label">Your message</label>
+            <div class="fcf-input-group">
+                <textarea id="message" name="message" class="fcf-form-control" rows="6" maxlength="3000" required></textarea>
+            </div>
+        </div>
+          <div>
+        </form>
+          </div>
+    </div>
+</body>
+
+</html>
